@@ -1,0 +1,41 @@
+server:
+  port: 8060
+
+spring:
+  h2:
+    console.enabled: true
+  datasource:
+    url: jdbc:h2:mem:account
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+  flyway:
+    locations: classpath:db/migration,classpath:db/data
+    enabled: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+resilience4j:
+  timelimiter:
+    instances:
+      addTransaction:
+        timeoutDuration: 3s
+  retry:
+    instances:
+      addTransaction:
+        maxAttempts: 4
+        waitDuration: 1s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+services:
+  transaction:
+    url: "http://127.0.0.1:8061"

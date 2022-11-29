@@ -1,0 +1,19 @@
+version: '3'
+services:
+  account-manager:
+    image: harvest/account-manager/image
+    container_name: 'account-manager'
+    restart: always
+    environment:
+      -  JAVA_TOOL_OPTIONS=--enable-preview
+      - services.transaction.url=http://transaction-manager:8061
+    ports:
+      - 8060:8060
+  transaction-manager:
+    image: harvest/transaction-manager/image
+    container_name: 'transaction-manager'
+    restart: always
+    environment:
+      - JAVA_TOOL_OPTIONS=--enable-preview
+    ports:
+      - 8061:8061

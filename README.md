@@ -1,4 +1,4 @@
-# Contracts Service
+# account-transaction Service
 
 ## Prerequisites
 
